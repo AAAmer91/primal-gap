@@ -1,0 +1,42 @@
+name: Verify cut-bit reconstruction
+
+on:
+  push:
+    paths:
+      - 'cut-bit-reconstruction/**'
+      - '.github/workflows/cut-bit-reconstruction.yml'
+  pull_request:
+    paths:
+      - 'cut-bit-reconstruction/**'
+      - '.github/workflows/cut-bit-reconstruction.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee # v1
+        with:
+          lake-package-directory: cut-bit-reconstruction
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'false'
+          use-github-cache: 'false'
+      - name: Build and check proofs
+        working-directory: cut-bit-reconstruction
+        run: |
+          lake exe cache get \
+            Mathlib.Algebra.BigOperators.Group.Finset.Sigma \
+            Mathlib.Data.ZMod.Basic \
+            Mathlib.Order.Interval.Finset.Nat \
+            Mathlib.Tactic.Ring \
+            Mathlib.Util.AssertNoSorry
+          lake build

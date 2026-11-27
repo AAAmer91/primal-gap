@@ -124,3 +124,7 @@ OPENBLAS_NUM_THREADS=1 python prime_gap_178_audit.py /path/to/release --compute 
 ```
 
 The producer uses outward arithmetic from the upstream numerical implementation. The assembler compares the nine recomputed original-pair cap enclosures with the archived exact controls, then uses Python fractions and directed integer square roots for the final budget. Parts of the radial increment evaluator are adapted from the authors' Apache-2.0 numerical release. See [third-party license](THIRD_PARTY_LICENSE.txt).
+
+## Graph theory note
+
+[Reconstructing the second bit of a graph cut](cut-bit-reconstruction/README.md) includes the theorem, a short proof, and a reproducible Lean formalization.
